@@ -1,10 +1,10 @@
 #   Programmer:     limodou
 #   E-mail:         limodou@gmail.com
-# 
+#
 #   Copyleft 2006 limodou
-# 
+#
 #   Distributed under the terms of the GPL (GNU Public License)
-# 
+#
 #   UliPad is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
 #   the Free Software Foundation; either version 2 of the License, or
@@ -8309,6 +8309,10 @@ def get_state(editor):
     pref = editor.pref
     filename, state, bookmarks = v = editor.get_full_state()
     if not filename: return #so the filename should not be empty
+
+    #for prevent IndexError
+    if pref.smart_nav_cur >= len(pref.smart_nav_files):
+        pref.smart_nav_cur = -1
 
     if not pref.smart_nav_files or pref.smart_nav_files[pref.smart_nav_cur][0] != filename:   #add new file
         pref.smart_nav_files = pref.smart_nav_files[:pref.smart_nav_cur+1]    #remove the next files

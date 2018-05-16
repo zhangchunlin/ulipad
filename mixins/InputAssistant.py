@@ -78,7 +78,7 @@ class InputAssistant(Mixin.Mixin):
             ctrl = event.ControlDown()
             alt = event.AltDown()
             shift = event.ShiftDown()
-            
+
         self.on_char = on_char
         self.oldpos = editor.GetCurrentPos()
         self.editor = editor
@@ -411,7 +411,8 @@ class InputAssistant(Mixin.Mixin):
 
                     win.word_len = win.GetCurrentPos() - length, -1
                     self.postcall(win.AutoCompShow, length, ' '.join(slist))
-                    win.AutoCompShow(length, ' '.join(slist))
+                    #revert 5da7d5f09 for https://github.com/limodou/ulipad/issues/8
+                    #win.AutoCompShow(length, ' '.join(slist))
                     return True
 
         if not word: return False
@@ -434,7 +435,8 @@ class InputAssistant(Mixin.Mixin):
 
                     win.word_len = win.GetCurrentPos() - length, -1
                     self.postcall(win.AutoCompShow, len(s), ' '.join(slist))
-                    win.AutoCompShow(len(s), ' '.join(slist))
+                    #revert 5da7d5f09 for https://github.com/limodou/ulipad/issues/8
+                    #win.AutoCompShow(len(s), ' '.join(slist))
                     return True
 
         return False
@@ -488,7 +490,8 @@ class InputAssistant(Mixin.Mixin):
             raise StopException
         if self.editor.AutoCompActive():
             wx.CallAfter(self.editor.AutoCompCancel)
-        #wx.CallAfter(f, *args)
+        #revert 5da7d5f09 for https://github.com/limodou/ulipad/issues/8
+        wx.CallAfter(f, *args)
         return
 
     def process_calltip_end(self):
@@ -555,7 +558,8 @@ class InputAssistant(Mixin.Mixin):
 #            self.postcall(win.UserListShow, list_type, s)
             win.word_len = win.GetCurrentPos(), -1
             self.postcall(win.AutoCompShow, 0, s)
-            win.AutoCompShow(0, s)
+            #revert 5da7d5f09 for https://github.com/limodou/ulipad/issues/8
+            #win.AutoCompShow(0, s)
             return True
         return False
 
@@ -809,7 +813,7 @@ class InputAssistant(Mixin.Mixin):
                     result.extend(r[1])
             if result:
                 return len(word), list(set(result))
-            
+
         except StopException:
             pass
         except:
